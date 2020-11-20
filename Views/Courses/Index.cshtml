@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CourseManagement.Models.Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>Courses Management</h1>
+
+
+<div id="PlaceHolder"></div>
+<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addCourse" data-url="@Url.Action("Create")">Create</button>
+<div class="row">
+    <div class="table-responsive-lg">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th >
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th >
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th ></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr class="eventItem">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addCourse" data-url="@Url.Action($"Edit/{item.Id}")">Edit</button>
+                        <button type="button" class="btn btn-danger" data-toggle="ajax-modal" data-target="#addCourse" data-url="@Url.Action($"Delete/{item.Id}")">Delete</button>
+                    </td>
+                    <td class="hide startDate" data-start-date="@item.startDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")"></td>
+                    <td class="hide endDate" data-end-date="@item.endDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")"></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div id='calendar'>
+
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        var __calendar;
+        var __calendarEl;
+        document.addEventListener('DOMContentLoaded', function () {
+            __calendarEl = document.getElementById('calendar');
+            __calendar = new FullCalendar.Calendar(__calendarEl, {
+                initialView: 'timeGridWeek',
+                slotDuration: '00:60:00',
+                slotLabelFormat: [
+                    {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    }
+                ],
+                slotMinTime: '09:00:00',
+                allDaySlot: false,
+                events: []
+            });
+            __calendar.render();
+            $('')
+        });
+
+    </script>
+
+}

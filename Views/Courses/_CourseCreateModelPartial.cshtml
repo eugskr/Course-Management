@@ -1,0 +1,53 @@
+﻿@model CourseManagement.ViewModels.CourseViewModel
+
+
+<div class="modal fade" id="addCourse">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addCourseLabel">Add Course</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="Courses/Create" data-ajax="true">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="startDate" class="control-label"></label>
+                        <input asp-for="startDate" class="form-control" />
+                        <span asp-validation-for="startDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Duration" class="control-label"></label>
+                        @Html.DropDownListFor(Model =>
+                        Model.Duration,
+                        Enumerable.Range(1, 7).Select(i => new SelectListItem
+                        {
+                            Value = (i * 30).ToString(),
+                            Text = TimeSpan.FromMinutes(i * 30).ToString(@"hh\:mm")
+                        }),
+                        "-- Hour --"
+                        )
+                        <span asp-validation-for="Duration" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
